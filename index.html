@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Field Camera Lab</title>
+<style>
+  :root {--sand: #f0e4ca; --ink: #261e16; --line: #897859; --rust: #833521; --light: #fff6df; font: 1rem/1.5 system-ui, sans-serif; color: var(--ink); background: var(--sand)}
+  * {box-sizing: border-box}
+  body {margin: 0}
+  main {width: min(100% - 2rem, 82rem); margin: auto; padding: clamp(1rem, 4vw, 4rem) 0}
+  header {display: flex; gap: 1rem; justify-content: space-between; align-items: center; padding-bottom: 1rem; border-bottom: 2px solid var(--ink)}
+  header span:first-child {font-weight: 850; font-size: 1.05rem; letter-spacing: -.03em}
+  header span:last-child {font-size: .9rem}
+  section {display: grid; grid-template-columns: minmax(15rem, .95fr) minmax(0, 1.5fr); align-items: center; gap: clamp(1rem, 4vw, 4rem); margin-top: 1.5rem}
+  h1, h2, p {margin: 0}
+  h1 {font: 900 clamp(3rem, 7.4vw, 7rem)/.91 system-ui, sans-serif; letter-spacing: -.065em}
+  .intro {max-width: 32rem; margin: 1rem 0 1.4rem; color: #54442c}
+  fieldset {margin: 0; padding: 0; border: 0; min-width: 0}
+  legend {font-size: .92rem; font-weight: 750; margin-bottom: .45rem}
+  .buttons {display: flex; flex-wrap: wrap; gap: .45rem}
+  button {font: inherit; min-height: 44px; padding: .35rem .7rem; border: 1px solid var(--line); border-radius: .25rem; color: var(--ink); background: var(--light); cursor: pointer}
+  button:hover {border-color: var(--rust)}
+  button[aria-pressed=true] {color: white; background: var(--rust); border-color: var(--rust)}
+  button:focus-visible, input:focus-visible {outline: 3px solid #79331f; outline-offset: 3px}
+  label {display: grid; gap: .45rem; margin-top: 1.1rem; font-size: .92rem; font-weight: 750}
+  input {accent-color: var(--rust); width: 100%; min-height: 2rem; margin: 0}
+  figure {margin: 0; border-radius: 2rem .3rem 2rem .3rem; overflow: hidden; background: #302a22; color: var(--light); border: 1px solid var(--ink)}
+  figure svg {width: 100%; display: block; height: auto}
+  figcaption {min-height: 6.5rem; padding: 1.05rem 1.2rem; display: grid; gap: .25rem; align-content: center; background: #3c3020}
+  figcaption p {max-width: 43rem; color: #e9d6b9}
+  figcaption h2 {font-size: 1.15rem}
+  .meter {display: grid; gap: .35rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid var(--line); color: #54442c; font-size: .91rem}
+  .meter output {font-weight: 750; color: var(--rust)}
+  @media (max-width: 49rem) {section {grid-template-columns: minmax(0, 1fr); gap: 1.25rem} figure {border-radius: 1rem .3rem 1rem .3rem}}
+</style>
+<main>
+  <header><span>Ridgeline Optical</span><span>Fictional equipment workshop</span></header>
+  <section aria-labelledby="lab-heading">
+    <div>
+      <h1 id="lab-heading">Field camera lab</h1>
+      <p class="intro">Take the fictional Sable 04 apart by feature. Change its aperture and follow what happens to the light.</p>
+      <fieldset>
+        <legend>Inspect a feature</legend>
+        <div class="buttons" id="features">
+          <button type="button" data-feature="lens" aria-pressed="true">Lens</button>
+          <button type="button" data-feature="finder" aria-pressed="false">Finder</button>
+          <button type="button" data-feature="grip" aria-pressed="false">Grip</button>
+        </div>
+      </fieldset>
+      <label for="aperture"><span>Aperture <output id="f-stop" for="aperture">f/4</output></span><input id="aperture" type="range" min="0" max="6" value="2"></label>
+      <div class="meter"><span>Relative light to f/2 <output id="relative-light" for="aperture">25%</output></span><span>Model assumes the same shutter speed and sensor sensitivity.</span></div>
+    </div>
+    <figure>
+      <svg viewBox="0 0 720 530" role="img" aria-labelledby="camera-title camera-description" xmlns="http://www.w3.org/2000/svg">
+        <title id="camera-title">Front view of the Sable 04</title>
+        <desc id="camera-description">Original schematic showing a dark metallic camera with a central lens, raised finder and textured side grip. A pointer follows the selected feature.</desc>
+        <defs>
+          <linearGradient id="metal" x2="0" y2="1"><stop stop-color="#a49c83"/><stop offset="1" stop-color="#5e5646"/></linearGradient>
+          <radialGradient id="glass"><stop stop-color="#557888"/><stop offset=".62" stop-color="#162f38"/><stop offset="1" stop-color="#0c181e"/></radialGradient>
+          <pattern id="texture" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#b4a585" opacity=".6"/></pattern>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#968260" stroke-opacity=".22"/></pattern>
+        </defs>
+        <rect width="720" height="530" fill="url(#grid)"/>
+        <path d="M115 426h490M112 420v12m492-12v12" fill="none" stroke="#b6a581"/>
+        <text x="360" y="451" text-anchor="middle" fill="#e7d7b5" font-family="system-ui, sans-serif" font-size="17">Front elevation</text>
+        <rect x="121" y="190" width="478" height="205" rx="34" fill="url(#metal)" stroke="#191812" stroke-width="5"/>
+        <path d="M123 243h474v117a31 31 0 0 1-31 31H154a31 31 0 0 1-31-31z" fill="#302e28"/>
+        <rect x="474" y="239" width="116" height="147" rx="17" fill="#484239"/>
+        <rect x="474" y="239" width="116" height="147" rx="17" fill="url(#texture)"/>
+        <path d="M267 191l26-42h109l30 42z" fill="#a09980" stroke="#27221a" stroke-width="4"/>
+        <rect x="310" y="162" width="74" height="23" rx="7" fill="#181a18"/>
+        <rect x="504" y="177" width="55" height="14" rx="4" fill="#786e5e" stroke="#241e16" stroke-width="3"/>
+        <rect x="154" y="202" width="43" height="23" rx="6" fill="#242820"/>
+        <text x="145" y="361" fill="#e3d3aa" font-family="system-ui, sans-serif" font-size="21" font-weight="700">Sable 04</text>
+        <g transform="translate(344 295)">
+          <circle r="109" fill="#232825" stroke="#181813" stroke-width="5"/>
+          <circle r="97" fill="#413d30" stroke="#b1a58c" stroke-width="2" stroke-dasharray="2 5"/>
+          <circle r="84" fill="url(#glass)" stroke="#161915" stroke-width="5"/>
+          <circle r="64" fill="#0b171a" fill-opacity=".71" stroke="#a19f77" stroke-opacity=".62"/>
+          <circle id="iris" r="29" fill="#97c8cc" fill-opacity=".84"/>
+          <circle id="iris-glint" cx="-9" cy="-10" r="5" fill="#f2fff7" fill-opacity=".87"/>
+        </g>
+        <path id="leader" d="M344 295L443 120H582" fill="none" stroke="#f3b061" stroke-width="2"/>
+        <circle id="pin" cx="344" cy="295" r="7" fill="#f3b061" stroke="#2c2419" stroke-width="2"/>
+        <text id="callout" x="582" y="106" text-anchor="end" fill="#ffdaa1" font-family="system-ui, sans-serif" font-size="18" font-weight="700">Lens</text>
+      </svg>
+      <figcaption aria-live="polite"><h2 id="feature-title">Lens and iris</h2><p id="feature-description">The iris sets the opening through which light reaches the sensor. A lower f-number means a wider opening.</p></figcaption>
+    </figure>
+  </section>
+  <noscript>Enable JavaScript to explore the features and adjust the aperture.</noscript>
+</main>
+<script>
+  const features = {
+    lens: {name: 'Lens', title: 'Lens and iris', description: 'The iris sets the opening through which light reaches the sensor. A lower f-number means a wider opening.', x: 344, y: 295},
+    finder: {name: 'Finder', title: 'Eye-level finder', description: 'The raised housing gives you a sheltered place to frame a scene before pressing the shutter.', x: 347, y: 174},
+    grip: {name: 'Grip', title: 'Textured grip', description: 'A raised texture adds purchase for your fingers. The grip sits below the shutter release.', x: 539, y: 290},
+  };
+  const buttons = [...document.querySelectorAll('[data-feature]')];
+  const aperture = document.querySelector('#aperture');
+  const stops = [2, 2.8, 4, 5.6, 8, 11, 16];
+
+  function showFeature(key) {
+    const feature = features[key];
+    buttons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.feature === key)));
+    document.querySelector('#feature-title').textContent = feature.title;
+    document.querySelector('#feature-description').textContent = feature.description;
+    document.querySelector('#leader').setAttribute('d', `M${feature.x} ${feature.y} L${Math.min(feature.x + 88, 565)} 120 H582`);
+    document.querySelector('#pin').setAttribute('cx', feature.x);
+    document.querySelector('#pin').setAttribute('cy', feature.y);
+    document.querySelector('#callout').textContent = feature.name;
+  }
+
+  function updateAperture() {
+    const stop = stops[Number(aperture.value)];
+    const radius = 59 * 2 / stop;
+    aperture.setAttribute('aria-valuetext', `f/${stop}`);
+    document.querySelector('#f-stop').value = `f/${stop}`;
+    document.querySelector('#relative-light').value = `${Number((100 * (2 / stop) ** 2).toFixed(1))}%`;
+    document.querySelector('#iris').setAttribute('r', radius);
+    document.querySelector('#iris-glint').setAttribute('transform', `scale(${radius / 29.5})`);
+  }
+
+  buttons.forEach(button => button.addEventListener('click', () => showFeature(button.dataset.feature)));
+  aperture.addEventListener('input', updateAperture);
+  updateAperture();
+</script>
+</html>
